@@ -17,7 +17,21 @@ public class DeckController : ControllerBase
     /// <summary>
     /// Shuffles and resets the deck
     /// </summary>
-    [HttpGet("shuffle")]
+    [HttpPost("new_deck")]
+    public IActionResult NewDeck()
+    {
+        var deck = _deckService.NewDeck();
+        return Ok(new
+        {
+            count = deck.Count,
+            cards = deck
+        });
+    }
+
+    /// <summary>
+    /// Shuffles and resets the deck
+    /// </summary>
+    [HttpPost("shuffle")]
     public IActionResult Shuffle()
     {
         var deck = _deckService.Shuffle();
@@ -27,13 +41,19 @@ public class DeckController : ControllerBase
     /// <summary>
     /// Draws 5 cards from the top of the deck
     /// </summary>
-    [HttpGet("draw_five")]
+    [HttpPost("draw_five")]
     public IActionResult DrawFive()
     {
+        Shuffle();
+
         try
         {
-            var cards = _deckService.DrawFive();
-            return Ok(cards);
+            var result = _deckService.DrawFive();
+            return Ok(new{
+                drawn = result.drawn,
+                remaining = result.cards,
+                count = result.count
+                });
         }
         catch (InvalidOperationException ex)
         {

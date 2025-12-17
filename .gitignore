@@ -1,1 +1,3 @@
 CardDeckApi.sln
+*.dll
+*.pdb

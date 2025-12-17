@@ -1,12 +1,14 @@
 using CardDeckApi.Models;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace CardDeckApi.Services;
 
 public interface IDeckService
 {
     IReadOnlyList<Card> Shuffle();
-    IReadOnlyList<Card> DrawFive();
+    (int count, IReadOnlyList<Card> cards, IReadOnlyList<Card> drawn) DrawFive();
     IReadOnlyList<Card> GetRemainingCards();
+    IReadOnlyList<Card> NewDeck();
 }
 
 public class DeckService : IDeckService
@@ -16,16 +18,24 @@ public class DeckService : IDeckService
 
     public DeckService()
     {
-        Shuffle();
+        NewDeck();
     }
 
-    public IReadOnlyList<Card> Shuffle()
+    public IReadOnlyList<Card> NewDeck()
     {
         var cards = Enum.GetValues<Rank>()
             .SelectMany(rank =>
                 Enum.GetValues<Suit>()
                     .Select(suit => new Card(rank, suit)))
             .ToList();
+
+        _deck = new Stack<Card>(cards);
+        return [.. _deck];
+    }
+
+    public IReadOnlyList<Card> Shuffle()
+    {
+        var cards = _deck.ToList();
 
         // Fisher–Yates shuffle
         for (int i = cards.Count - 1; i > 0; i--)
@@ -35,10 +45,10 @@ public class DeckService : IDeckService
         }
 
         _deck = new Stack<Card>(cards.Reverse<Card>());
-        return _deck.ToList();
+        return [.. _deck];
     }
 
-    public IReadOnlyList<Card> DrawFive()
+    public (int count, IReadOnlyList<Card> cards, IReadOnlyList<Card> drawn) DrawFive()
     {
         if (_deck.Count < 5)
         {
@@ -51,13 +61,17 @@ public class DeckService : IDeckService
             drawn.Add(_deck.Pop());
         }
 
-        return drawn;
+        return (
+            _deck.Count,
+            [.._deck],
+            drawn
+        );
     }
     
     public IReadOnlyList<Card> GetRemainingCards()
     {
         // Stack enumerates from top → bottom
-        return _deck.ToList();
+        return [.. _deck];
     }
 
 }

@@ -34,3 +34,4 @@
 /Users/keneigweagu/Documents/Projects/CardDeckApi/obj/Debug/net10.0/CardDeckApi.pdb
 /Users/keneigweagu/Documents/Projects/CardDeckApi/obj/Debug/net10.0/CardDeckApi.genruntimeconfig.cache
 /Users/keneigweagu/Documents/Projects/CardDeckApi/obj/Debug/net10.0/ref/CardDeckApi.dll
+/Users/keneigweagu/Documents/Projects/CardDeckApi/obj/Debug/net10.0/CardDeckApi.sourcelink.json
