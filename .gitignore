@@ -1,4 +1,5 @@
 CardDeckApi.sln
+.DS_Store
 *.dll
 *.pdb
 bin/
