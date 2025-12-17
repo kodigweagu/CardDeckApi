@@ -4,3 +4,4 @@ CardDeckApi.sln
 *.pdb
 bin/
 obj/
+.vscode/

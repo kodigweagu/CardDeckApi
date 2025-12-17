@@ -50,9 +50,9 @@ public class DeckController : ControllerBase
         {
             var result = _deckService.DrawFive();
             return Ok(new{
-                drawn = result.drawn,
+                result.drawn,
                 remaining = result.cards,
-                count = result.count
+                result.count
                 });
         }
         catch (InvalidOperationException ex)
