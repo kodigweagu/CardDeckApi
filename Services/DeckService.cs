@@ -1,5 +1,4 @@
 using CardDeckApi.Models;
-using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace CardDeckApi.Services;
 

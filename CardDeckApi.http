@@ -1,6 +1,0 @@
-@CardDeckApi_HostAddress = http://localhost:5064
-
-GET {{CardDeckApi_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
